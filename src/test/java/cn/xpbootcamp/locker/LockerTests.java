@@ -20,8 +20,6 @@ public class LockerTests {
 
         Response response = locker.saveBag();
         Ticket ticket = response.getTicket();
-        int slotNo = response.getSlotNo();
-
 
         Assertions.assertNotNull(ticket);
         int newSlotCount = locker.getSlotCount();
@@ -30,7 +28,16 @@ public class LockerTests {
 
     @Test
     public void expect_slot_count_unchanged_and_output_ticket_is_empty_when_save_bag_given_slot_count_is_zero() {
+        Locker locker = new Locker();
+        int slotCount = locker.getSlotCount();
+        for (int i = 0; i < slotCount; i++) {
+            locker.saveBag();
+        }
+        Assertions.assertEquals(locker.getSlotCount(), 0);
 
+        Response response = locker.saveBag();
+        Assertions.assertEquals(locker.getSlotCount(), 0);
+        Assertions.assertNull(response.getTicket());
     }
 
 }

@@ -22,6 +22,6 @@ public class Locker {
                 return new Response(ticket, i);
             }
         }
-        return null;
+        return new Response(null,-1);
     }
 }
