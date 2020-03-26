@@ -18,7 +18,10 @@ public class LockerTests {
         int oldSlotCount = locker.getSlotCount();
         Assertions.assertNotEquals(0, oldSlotCount);
 
-        String ticket = locker.saveBag();
+        Response response = locker.saveBag();
+        Ticket ticket = response.getTicket();
+        int slotNo = response.getSlotNo();
+
 
         Assertions.assertNotNull(ticket);
         int newSlotCount = locker.getSlotCount();

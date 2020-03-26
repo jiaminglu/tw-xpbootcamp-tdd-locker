@@ -1,4 +1,5 @@
 package cn.xpbootcamp.locker;
 
-public class Ticket {
+class Ticket {
+
 }
