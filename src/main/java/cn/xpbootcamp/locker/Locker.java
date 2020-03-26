@@ -24,4 +24,14 @@ public class Locker {
         }
         return new Response(null,-1);
     }
+
+    public int takeOutBag(Ticket ticket) {
+        for (int i = 0; i < slots.length; i++) {
+            if (slots[i] == ticket) {
+                slots[i] = null;
+                return i;
+            }
+        }
+        return -1;
+    }
 }
