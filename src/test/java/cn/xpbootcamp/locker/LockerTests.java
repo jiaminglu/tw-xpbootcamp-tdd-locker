@@ -5,91 +5,59 @@ import org.junit.jupiter.api.Test;
 
 public class LockerTests {
 
-    @Test
-    public void expect_slot_count_is_19_when_new_locker() {
-        Locker locker = new Locker();
-        int slotCount = locker.getSlotCount();
-        Assertions.assertEquals(19, slotCount);
-    }
 
     @Test
-    public void expect_slot_count_decrease_by_one_and_output_ticket_when_save_bag_given_slot_count_is_not_zero() {
-        Locker locker = new Locker();
-        int oldSlotCount = locker.getSlotCount();
-        Assertions.assertNotEquals(0, oldSlotCount);
-
-        Response response = locker.saveBag();
-        Ticket ticket = response.getTicket();
-
+    public void should_output_ticket_when_save_bag_given_locker_is_not_full() {
+        //Given
+        Locker locker = new Locker(19);
+        //When
+        Ticket ticket = locker.saveBag(new Bag());
+        //Then
         Assertions.assertNotNull(ticket);
-        int newSlotCount = locker.getSlotCount();
-        Assertions.assertEquals(oldSlotCount - 1, newSlotCount);
     }
 
     @Test
-    public void expect_slot_count_unchanged_and_output_ticket_is_empty_when_save_bag_given_slot_count_is_zero() {
-        Locker locker = new Locker();
-        int slotCount = locker.getSlotCount();
-        for (int i = 0; i < slotCount; i++) {
-            locker.saveBag();
-        }
-        Assertions.assertEquals(0, locker.getSlotCount());
-
-        Response response = locker.saveBag();
-        Assertions.assertEquals(0, locker.getSlotCount());
-        Assertions.assertNull(response.getTicket());
+    public void should_throw_save_bag_fail_exception_when_save_bag_given_locker_is_full() {
+        //Given
+        Locker locker = new Locker(0);
+        //When & Then
+        Assertions.assertThrows(SaveBagFailException.class, () -> {
+            locker.saveBag(new Bag());
+        });
     }
 
     @Test
-    public void expect_slot_count_increased_by_1_and_output_slot_number_when_take_out_bag_given_ticket_valid() {
-        Locker locker = new Locker();
-
-        // 存包
-        Response response = locker.saveBag();
-        Ticket ticket = response.getTicket();
-        int slotNumber = response.getSlotNo();
-
-        int oldSlotCount = locker.getSlotCount();
-
-        // 取包
-        int resultSlotNumber = locker.takeOutBag(ticket);
-
-        int newSlotCount = locker.getSlotCount();
-        Assertions.assertEquals(oldSlotCount + 1, newSlotCount);
-        Assertions.assertEquals(slotNumber, resultSlotNumber);
+    public void should_get_bag_when_take_out_bag_given_valid_ticket() {
+        //Given
+        Locker locker = new Locker(5);
+        Bag bagSaved = new Bag();
+        Ticket ticket = locker.saveBag(bagSaved);
+        //When
+        Bag bagTakedOut = locker.takeOutBag(ticket);
+        //Then
+        Assertions.assertEquals(bagTakedOut, bagSaved);
     }
 
     @Test
-    public void expect_ticket_invalidated_when_take_out_bag_given_ticket_valid() {
-        Locker locker = new Locker();
-
-        // 存包
-        Response response = locker.saveBag();
-        Ticket ticket = response.getTicket();
-        int slotNumber = response.getSlotNo();
-
-        int oldSlotCount = locker.getSlotCount();
-
-        // 取包
-        int resultSlotNumber = locker.takeOutBag(ticket);
-        Assertions.assertEquals(oldSlotCount + 1, locker.getSlotCount());
-
-        // 再次取包，票据失效
-        int resultSlotNumber2 = locker.takeOutBag(ticket);
-        Assertions.assertEquals(oldSlotCount + 1, locker.getSlotCount());
+    public void should_throw_take_out_bag_fail_exception_when_take_out_bag_given_used_ticket() {
+        //Given
+        Locker locker = new Locker(5);
+        Ticket ticket = locker.saveBag(new Bag());
+        locker.takeOutBag(ticket);
+        //When & Then
+        Assertions.assertThrows(SaveBagFailException.class, () -> {
+            locker.takeOutBag(ticket);
+        });
     }
 
     @Test
-    public void expect_slot_count_unchanged_and_no_output_when_take_out_bag_given_invalid_ticket() {
-        Locker locker = new Locker();
+    public void expect_throw_take_out_bag_fail_exception_when_take_out_bag_given_invalid_ticket() {
+        //Given
+        Locker locker = new Locker(5);
         Ticket ticket = new Ticket();
-
-        int oldSlotCount = locker.getSlotCount();
-
-        int resultSlotNumber = locker.takeOutBag(ticket);
-
-        int newSlotCount = locker.getSlotCount();
-        Assertions.assertEquals(oldSlotCount, newSlotCount);
-        Assertions.assertEquals(-1, resultSlotNumber);
+        //When & Then
+        Assertions.assertThrows(SaveBagFailException.class, () -> {
+            locker.takeOutBag(ticket);
+        });
     }
 }
