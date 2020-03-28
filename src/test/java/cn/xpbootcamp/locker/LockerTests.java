@@ -9,7 +9,7 @@ public class LockerTests {
     @Test
     public void should_output_ticket_when_save_bag_given_locker_is_not_full() throws SaveBagFailException {
         //Given
-        Locker locker = new Locker(19);
+        Locker locker = new Locker(1);
         //When
         Ticket ticket = locker.saveBag(new Bag());
         //Then
