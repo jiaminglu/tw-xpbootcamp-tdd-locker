@@ -1,28 +1,26 @@
 * WHEN 存包
 	* GIVEN 柜子已满
-		* 柜子剩余数不变
-		* 不输出票据
-	* GIVEN 票据未满
-		* 柜子剩余数 - 1
-		* 给出票据，以及柜子号
+		* THEN 存包失败
+	* GIVEN 柜子未满
+		* THEN 给出票据
 
 * WHEN 取包
-	* GIVEN 票据有效
-		* 返回柜子号
-		* 柜子剩余数 + 1
-		* 票据失效
-	* GIVEN 票据无效
-	  * 不返回柜子号
-		* 柜子剩余数不变
+	* GIVEN 有效票据
+		* THEN 取包成功
+	* GIVEN 作废票据
+	    * THEN 取包失败
+	* GIVEN 无效票据
+		* THEN 取包失败
 
 ## Test case
 
-EXPECT 柜子剩余数不变并且输出票据为空 WHEN 存包 GIVEN 柜子已满
+Given 柜子已满 When 存包 Then 存包失败
 
-EXPECT 柜子剩余数-1并且给出票据，以及柜子号 WHEN 存包 GIVEN 票据未满
+Given 柜子未满 When 存包 Then 给出票据
 
-EXPECT 柜子剩余数 + 1, 返回柜子号 WHEN 取包 GIVEN 票据有效
+Given 有效票据 When 取包 Then 取包成功
 
-EXPECT 票据失效 WHEN 取包 GIVEN 票据有效
+Given 作废票据 When 取包 Then 取包失败
 
-EXPECT 柜子剩余数不变, 返回柜子号为空 WHEN 取包 GIVEN 票据无效
+Given 无效票据 When 取包 Then 取包失败
+
