@@ -1,4 +1,4 @@
 package cn.xpbootcamp.locker;
 
-public class TakeOutBagFailException {
+public class TakeOutBagFailException extends Exception {
 }

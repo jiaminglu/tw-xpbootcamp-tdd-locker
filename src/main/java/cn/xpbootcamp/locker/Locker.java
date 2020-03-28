@@ -1,28 +1,37 @@
 package cn.xpbootcamp.locker;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Locker {
 
     private final int capacity;
-    private Ticket[] slots;
+    private Map<Ticket, Bag> slots;
 
     public Locker(int capacity) {
         this.capacity = capacity;
+        slots = new HashMap<>(capacity);
     }
 
-    public int getSlotCount() {
-        int count = 0;
-        for (Ticket slot : slots) {
-            if (slot == null)
-                count++;
+    public Ticket saveBag(Bag bag) throws SaveBagFailException {
+        if(slots.size()<capacity) {
+            Ticket ticket = new Ticket();
+            slots.put(ticket,bag);
+            return ticket;
         }
-        return count;
+        else{
+            throw new SaveBagFailException();
+        }
     }
 
-    public Ticket saveBag(Bag bag) {
-        return new Ticket();
-    }
-
-    public Bag takeOutBag(Ticket ticket) {
-        return new Bag();
+    public Bag takeOutBag(Ticket ticket) throws TakeOutBagFailException {
+        if(slots.containsKey(ticket)){
+            Bag bag = slots.get(ticket);
+            slots.remove(ticket);
+            return bag;
+        }
+        else{
+            throw new TakeOutBagFailException();
+        }
     }
 }

@@ -7,7 +7,7 @@ public class LockerTests {
 
 
     @Test
-    public void should_output_ticket_when_save_bag_given_locker_is_not_full() {
+    public void should_output_ticket_when_save_bag_given_locker_is_not_full() throws SaveBagFailException {
         //Given
         Locker locker = new Locker(19);
         //When
@@ -27,7 +27,7 @@ public class LockerTests {
     }
 
     @Test
-    public void should_get_bag_when_take_out_bag_given_valid_ticket() {
+    public void should_get_bag_when_take_out_bag_given_valid_ticket() throws TakeOutBagFailException, SaveBagFailException {
         //Given
         Locker locker = new Locker(5);
         Bag bagSaved = new Bag();
@@ -39,13 +39,13 @@ public class LockerTests {
     }
 
     @Test
-    public void should_throw_take_out_bag_fail_exception_when_take_out_bag_given_used_ticket() {
+    public void should_throw_take_out_bag_fail_exception_when_take_out_bag_given_used_ticket() throws TakeOutBagFailException, SaveBagFailException {
         //Given
         Locker locker = new Locker(5);
         Ticket ticket = locker.saveBag(new Bag());
         locker.takeOutBag(ticket);
         //When & Then
-        Assertions.assertThrows(SaveBagFailException.class, () -> {
+        Assertions.assertThrows(TakeOutBagFailException.class, () -> {
             locker.takeOutBag(ticket);
         });
     }
@@ -56,7 +56,7 @@ public class LockerTests {
         Locker locker = new Locker(5);
         Ticket ticket = new Ticket();
         //When & Then
-        Assertions.assertThrows(SaveBagFailException.class, () -> {
+        Assertions.assertThrows(TakeOutBagFailException.class, () -> {
             locker.takeOutBag(ticket);
         });
     }
