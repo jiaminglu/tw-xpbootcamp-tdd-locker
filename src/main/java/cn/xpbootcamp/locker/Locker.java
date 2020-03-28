@@ -14,24 +14,20 @@ public class Locker {
     }
 
     public Ticket saveBag(Bag bag) throws SaveBagFailException {
-        if(slots.size()<capacity) {
-            Ticket ticket = new Ticket();
-            slots.put(ticket,bag);
-            return ticket;
-        }
-        else{
+        if (slots.size() >= capacity) {
             throw new SaveBagFailException();
         }
+        Ticket ticket = new Ticket();
+        slots.put(ticket, bag);
+        return ticket;
     }
 
     public Bag takeOutBag(Ticket ticket) throws TakeOutBagFailException {
-        if(slots.containsKey(ticket)){
-            Bag bag = slots.get(ticket);
-            slots.remove(ticket);
-            return bag;
-        }
-        else{
+        if (!slots.containsKey(ticket)) {
             throw new TakeOutBagFailException();
         }
+        Bag bag = slots.get(ticket);
+        slots.remove(ticket);
+        return bag;
     }
 }
