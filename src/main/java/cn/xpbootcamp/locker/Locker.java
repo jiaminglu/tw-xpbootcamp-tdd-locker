@@ -30,4 +30,8 @@ public class Locker {
         slots.remove(ticket);
         return bag;
     }
+
+    boolean isTicketValid(Ticket ticket) {
+        return slots.containsKey(ticket);
+    }
 }

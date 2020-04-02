@@ -21,7 +21,7 @@ public class LockerRobotTests {
     }
 
     @Test
-    public void should_bag_saved_in_first_locker_when_save_bag_given_first_locker_not_full(){
+    public void should_bag_saved_in_first_locker_when_save_bag_given_first_locker_not_full() throws SaveBagFailException {
         //given
         List<Locker> lockers = new ArrayList<>();
         Locker locker_1=new Locker(1);
