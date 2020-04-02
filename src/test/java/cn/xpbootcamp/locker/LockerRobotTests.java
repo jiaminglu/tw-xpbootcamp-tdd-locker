@@ -57,7 +57,7 @@ public class LockerRobotTests {
     }
 
     @Test
-    public void should_success_when_take_out_bag_given_valid_ticket() throws SaveBagFailException {
+    public void should_success_when_take_out_bag_given_valid_ticket() throws SaveBagFailException, TakeOutBagFailException {
         //given
         List<Locker> lockers = new ArrayList<>();
         Locker locker=new Locker(1);
@@ -72,7 +72,7 @@ public class LockerRobotTests {
     }
 
     @Test
-    public void should_fail_when_take_out_bag_given_used_ticket() throws SaveBagFailException {
+    public void should_fail_when_take_out_bag_given_used_ticket() throws SaveBagFailException, TakeOutBagFailException {
         //given
         List<Locker> lockers = new ArrayList<>();
         Locker locker=new Locker(1);

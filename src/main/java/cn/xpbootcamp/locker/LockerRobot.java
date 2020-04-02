@@ -27,4 +27,14 @@ public class LockerRobot {
         }
         return null;
     }
+
+    public Bag takeOutBag(Ticket ticket) throws TakeOutBagFailException {
+        for (Locker locker: lockers){
+            try{
+                return locker.takeOutBag(ticket);
+            } catch (TakeOutBagFailException ignored) {
+            }
+        }
+        throw new TakeOutBagFailException();
+    }
 }
