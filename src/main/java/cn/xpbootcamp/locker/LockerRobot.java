@@ -12,9 +12,10 @@ public class LockerRobot {
     public Ticket saveBag(Bag bag) throws SaveBagFailException {
         Ticket ticket = null;
         for (Locker locker : lockers) {
-            if (locker.notFull()) {
+            try{
                 ticket = locker.saveBag(bag);
                 break;
+            }catch (SaveBagFailException ignored){
             }
         }
         if (ticket != null)

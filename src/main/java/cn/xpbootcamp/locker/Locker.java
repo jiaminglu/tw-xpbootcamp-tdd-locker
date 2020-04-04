@@ -30,8 +30,4 @@ public class Locker {
         slots.remove(ticket);
         return bag;
     }
-
-    boolean notFull() {
-        return slots.size()>=capacity;
-    }
 }
