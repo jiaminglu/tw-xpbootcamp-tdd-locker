@@ -10,31 +10,34 @@ public class LockerRobot {
     }
 
     public Ticket saveBag(Bag bag) throws SaveBagFailException {
+        Ticket ticket = null;
         for (Locker locker : lockers) {
-            try {
-                return locker.saveBag(bag);
-            } catch (SaveBagFailException ignored) {
+            if (locker.notFull()) {
+                ticket = locker.saveBag(bag);
+                break;
             }
         }
-        throw new SaveBagFailException();
+        if (ticket != null)
+            return ticket;
+        else
+            throw new SaveBagFailException();
     }
 
-    public Locker findLocker(Ticket ticket) {
-        for (Locker locker : lockers) {
-            if (locker.isTicketValid(ticket)) {
-                return locker;
-            }
-        }
-        return null;
-    }
 
     public Bag takeOutBag(Ticket ticket) throws TakeOutBagFailException {
-        for (Locker locker: lockers){
-            try{
-                return locker.takeOutBag(ticket);
+        Bag bag = null;
+        int count = 0;
+        for (Locker locker : lockers) {
+            try {
+                bag = locker.takeOutBag(ticket);
+                break;
             } catch (TakeOutBagFailException ignored) {
+                count++;
             }
         }
-        throw new TakeOutBagFailException();
+        if (count < lockers.size())
+            return bag;
+        else
+            throw new TakeOutBagFailException();
     }
 }

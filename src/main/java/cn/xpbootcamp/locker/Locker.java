@@ -31,7 +31,7 @@ public class Locker {
         return bag;
     }
 
-    boolean isTicketValid(Ticket ticket) {
-        return slots.containsKey(ticket);
+    boolean notFull() {
+        return slots.size()>=capacity;
     }
 }
