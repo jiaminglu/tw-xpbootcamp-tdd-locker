@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public class SmartRobot {
     private List<Locker> lockers;
+
     public SmartRobot(List<Locker> lockers) {
         this.lockers = lockers;
     }
@@ -20,5 +21,19 @@ public class SmartRobot {
             return locker.get().saveBag(bag);
         }
         throw new SaveBagFailException();
+    }
+
+    public Bag takeOutBag(Ticket ticket) throws TakeOutBagFailException {
+        Bag result = null;
+        for (Locker locker : lockers) {
+            try {
+                result = locker.takeOutBag(ticket);
+            } catch (TakeOutBagFailException e) {
+            }
+        }
+        if (result != null)
+            return result;
+        else
+            throw new TakeOutBagFailException();
     }
 }
