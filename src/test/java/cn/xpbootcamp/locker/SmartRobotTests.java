@@ -30,7 +30,7 @@ public class SmartRobotTests {
     }
 
     @Test
-    void should_bag_in_second_locker_when_save_bag_using_smart_robot_given_locker1_has_1_slot_and_locker2_has_2_slots() throws TakeOutBagFailException {
+    void should_bag_in_second_locker_when_save_bag_using_smart_robot_given_locker1_has_1_slot_and_locker2_has_2_slots() throws TakeOutBagFailException, SaveBagFailException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(2);
 

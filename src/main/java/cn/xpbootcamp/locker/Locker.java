@@ -30,4 +30,8 @@ public class Locker {
         slots.remove(ticket);
         return bag;
     }
+
+    public int getEmptySlotCount() {
+        return capacity - slots.size();
+    }
 }
