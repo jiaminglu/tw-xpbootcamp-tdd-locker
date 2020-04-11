@@ -6,32 +6,32 @@ import java.util.Map;
 public class Locker {
 
     private final int capacity;
-    private Map<Ticket, Bag> slots;
+    private Map<Ticket, Bag> savedBags;
 
     public Locker(int capacity) {
         this.capacity = capacity;
-        slots = new HashMap<>(capacity);
+        savedBags = new HashMap<>(capacity);
     }
 
     public Ticket saveBag(Bag bag) throws SaveBagFailException {
-        if (slots.size() >= capacity) {
+        if (savedBags.size() >= capacity) {
             throw new SaveBagFailException();
         }
         Ticket ticket = new Ticket();
-        slots.put(ticket, bag);
+        savedBags.put(ticket, bag);
         return ticket;
     }
 
     public Bag takeOutBag(Ticket ticket) throws TakeOutBagFailException {
-        if (!slots.containsKey(ticket)) {
+        if (!savedBags.containsKey(ticket)) {
             throw new TakeOutBagFailException();
         }
-        Bag bag = slots.get(ticket);
-        slots.remove(ticket);
+        Bag bag = savedBags.get(ticket);
+        savedBags.remove(ticket);
         return bag;
     }
 
     public int getEmptySlotCount() {
-        return capacity - slots.size();
+        return capacity - savedBags.size();
     }
 }

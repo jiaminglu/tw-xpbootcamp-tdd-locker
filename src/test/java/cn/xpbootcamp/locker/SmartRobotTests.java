@@ -15,7 +15,7 @@ public class SmartRobotTests {
     }
 
     @Test
-    void should_fail_when_save_bag_using_smart_robot_given_all_lockers_full() throws SaveBagFailException {
+    void should_throw_save_bag_fail_exception_when_save_bag_using_smart_robot_given_all_lockers_full() throws SaveBagFailException {
         Locker locker1 = createFullLocker();
         Locker locker2 = createFullLocker();
         List<Locker> lockers = new ArrayList<>();
@@ -30,7 +30,7 @@ public class SmartRobotTests {
     }
 
     @Test
-    void should_bag_in_second_locker_when_save_bag_using_smart_robot_given_locker1_has_1_slot_and_locker2_has_2_slots() throws TakeOutBagFailException, SaveBagFailException {
+    void should_bag_in_second_locker_and_print_ticket_when_save_bag_using_smart_robot_given_locker1_has_1_slot_and_locker2_has_2_slots() throws TakeOutBagFailException, SaveBagFailException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(2);
 
@@ -44,10 +44,11 @@ public class SmartRobotTests {
         Ticket ticket = robot.saveBag(bag);
 
         Assertions.assertEquals(bag, locker2.takeOutBag(ticket));
+        Assertions.assertNotNull(ticket);
     }
 
     @Test
-    void should_bag_in_first_locker_when_save_bag_using_smart_robot_given_locker1_has_2_slot_and_locker2_has_1_slots() throws TakeOutBagFailException, SaveBagFailException {
+    void should_bag_in_first_locker_and_print_ticket_when_save_bag_using_smart_robot_given_locker1_has_2_slot_and_locker2_has_1_slots() throws TakeOutBagFailException, SaveBagFailException {
         Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(1);
 
@@ -61,10 +62,11 @@ public class SmartRobotTests {
         Ticket ticket = robot.saveBag(bag);
 
         Assertions.assertEquals(bag, locker1.takeOutBag(ticket));
+        Assertions.assertNotNull(ticket);
     }
 
     @Test
-    void should_bag_in_first_locker_when_save_bag_using_smart_robot_given_locker1_has_2_slot_and_locker2_has_2_slots() throws TakeOutBagFailException, SaveBagFailException {
+    void should_bag_in_first_locker_and_print_ticket_when_save_bag_using_smart_robot_given_locker1_has_2_slot_and_locker2_has_2_slots() throws TakeOutBagFailException, SaveBagFailException {
         Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(2);
 
@@ -78,10 +80,11 @@ public class SmartRobotTests {
         Ticket ticket = robot.saveBag(bag);
 
         Assertions.assertEquals(bag, locker1.takeOutBag(ticket));
+        Assertions.assertNotNull(ticket);
     }
 
     @Test
-    void should_success_when_take_out_bag_using_smart_robot_given_valid_ticket_and_bag_saved_in_first_locker() throws SaveBagFailException, TakeOutBagFailException {
+    void should_return_my_bag_when_take_out_bag_using_smart_robot_given_valid_ticket_and_bag_saved_in_first_locker() throws SaveBagFailException, TakeOutBagFailException {
         Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(1);
 
@@ -99,7 +102,7 @@ public class SmartRobotTests {
     }
 
     @Test
-    void should_success_when_take_out_bag_using_smart_robot_given_valid_ticket_and_bag_saved_in_second_locker() throws SaveBagFailException, TakeOutBagFailException {
+    void should_return_my_bag_when_take_out_bag_using_smart_robot_given_valid_ticket_and_bag_saved_in_second_locker() throws SaveBagFailException, TakeOutBagFailException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(2);
 
@@ -117,7 +120,7 @@ public class SmartRobotTests {
     }
 
     @Test
-    void should_fail_when_take_out_bag_using_smart_robot_given_used_ticket() throws SaveBagFailException, TakeOutBagFailException {
+    void should_throw_take_out_bag_fail_exception_when_take_out_bag_using_smart_robot_given_used_ticket() throws SaveBagFailException, TakeOutBagFailException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(2);
 
@@ -136,7 +139,7 @@ public class SmartRobotTests {
     }
 
     @Test
-    void should_fail_when_take_out_bag_using_smart_robot_given_invalid_ticket() {
+    void should_throw_take_out_bag_fail_exception_when_take_out_bag_using_smart_robot_given_invalid_ticket() {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(2);
 
