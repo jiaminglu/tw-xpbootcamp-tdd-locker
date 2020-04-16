@@ -34,4 +34,8 @@ public class Locker {
     public int getEmptySlotCount() {
         return capacity - savedBags.size();
     }
+
+    public double getEmptyRate() {
+        return getEmptySlotCount()/(double)capacity;
+    }
 }
