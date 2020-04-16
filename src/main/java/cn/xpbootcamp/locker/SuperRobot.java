@@ -21,4 +21,18 @@ public class SuperRobot {
         }
         throw new SaveBagFailException();
     }
+
+    public Bag takeOutBag(Ticket ticket) throws TakeOutBagFailException {
+        Bag bag = null;
+        for (Locker locker : lockers) {
+            try {
+                bag = locker.takeOutBag(ticket);
+            } catch (TakeOutBagFailException ignore) {
+            }
+        }
+        if (bag == null) {
+            throw new TakeOutBagFailException();
+        }
+        return bag;
+    }
 }

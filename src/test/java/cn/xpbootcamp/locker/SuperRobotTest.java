@@ -63,4 +63,53 @@ public class SuperRobotTest {
             robot.saveBag(new Bag());
         });
     }
+
+    @Test
+    public void should_success_when_take_bag_given_bag_in_first_locker_and_valid_ticket() throws SaveBagFailException, TakeOutBagFailException {
+        Locker locker_1 = getLocker(1, 1);
+        Locker locker_2 = getLocker(1, 1);
+        Bag bag = new Bag();
+        Ticket ticket = locker_1.saveBag(bag);
+        SuperRobot robot = new SuperRobot(Arrays.asList(locker_1, locker_2));
+
+        Bag bagResult = robot.takeOutBag(ticket);
+        Assertions.assertEquals(bag, bagResult);
+    }
+
+    @Test
+    public void should_success_when_take_bag_given_bag_in_second_locker_and_valid_ticket() throws SaveBagFailException, TakeOutBagFailException {
+        Locker locker_1 = getLocker(1, 1);
+        Locker locker_2 = getLocker(1, 1);
+        Bag bag = new Bag();
+        Ticket ticket = locker_1.saveBag(bag);
+        SuperRobot robot = new SuperRobot(Arrays.asList(locker_1, locker_2));
+
+        Bag bagResult = robot.takeOutBag(ticket);
+        Assertions.assertEquals(bag, bagResult);
+    }
+
+    @Test
+    public void should_fail_when_take_bag_given_used_ticket() throws SaveBagFailException, TakeOutBagFailException {
+        Locker locker_1 = getLocker(1, 1);
+        Locker locker_2 = getLocker(1, 1);
+        Bag bag = new Bag();
+        Ticket ticket = locker_1.saveBag(bag);
+        SuperRobot robot = new SuperRobot(Arrays.asList(locker_1, locker_2));
+        robot.takeOutBag(ticket);
+
+        Assertions.assertThrows(TakeOutBagFailException.class, () -> {
+            robot.takeOutBag(new Ticket());
+        });
+    }
+
+    @Test
+    public void should_fail_when_take_bag_given_invalid_ticket() throws SaveBagFailException, TakeOutBagFailException {
+        Locker locker_1 = getLocker(1, 1);
+        Locker locker_2 = getLocker(1, 1);
+        SuperRobot robot = new SuperRobot(Arrays.asList(locker_1, locker_2));
+
+        Assertions.assertThrows(TakeOutBagFailException.class, () -> {
+            robot.takeOutBag(new Ticket());
+        });
+    }
 }
