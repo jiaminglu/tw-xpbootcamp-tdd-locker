@@ -31,11 +31,11 @@ public class Locker {
         return bag;
     }
 
-    public int getEmptySlotCount() {
+    int getEmptySlotCount() {
         return capacity - savedBags.size();
     }
 
-    public double getEmptyRate() {
+    double getEmptyRate() {
         return getEmptySlotCount()/(double)capacity;
     }
 }
